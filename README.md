@@ -16,84 +16,95 @@ A full-stack web app that ranks how desirable it is to visit a city for various 
 
 ---
 
-## 🛠️ Tech Stack
+## 🔧 Technologies and Component Breakdown
+### 1. React Frontend
+- Built with React + Apollo Client + Recharts
+- Accepts city name as input
+- Sends GraphQL query to backend
+- Displays weather activity rankings as bar charts
 
-### Frontend
-- **React**
-- **Apollo Client (GraphQL)**
-- **Recharts**
+### 2. Node.js Backend
+- Built with Node.js, Express + Apollo Server (GraphQL)
+- Exposes getActivityRankings(city) query
+- Makes two REST calls to:
+  - Open-Meteo Geocoding API → Get lattitude/longitude
+  - Open-Meteo Forecast API → Get 7-day weather
+- Applies custom scoring logic for each activity
+- Returns rankings per activity sorted by score
 
-### Backend
-- **Node.js**
-- **Express**
-- **Apollo Server (GraphQL)**
-- **Open-Meteo API**
+### 3. 3rd Party Open-Meteo APIs
+- Geocoding API: Converts city name → coordinates
+- Forecast API: 7-day weather (temp, wind, snow, rain)
 
----
 
 ## 📦 Setup Instructions
 
 ### 1. Clone the Repo
 
 git clone https://github.com/arao1223/Activites.git
-cd Aweather-activity-app
+- cd Activities
 
-2. Install Backend
-cd backend
-npm install
-node index.js
+### 2. Install Backend
+- cd activity-backend
+- npm install
+- node index.js
 
 Backend runs at http://localhost:4000/graphql
 
 
-3. Install Frontend
-cd ../weather-activity-ui
-npm install
-npm start
+### 3. Install Frontend
+- cd ../activity-ui
+- npm install
+- npm start
 
 Frontend runs at http://localhost:3000
 
-4. Folder Structure
+### 4. Folder Structure
+- Activities/
+  - activity-backend/
+    - index.js
+    - schema.js
+    - resolvers.js
+    - utils/
+      - scorer.js
+    - package.json
+    - README.md
 
-weather-activity-app/
-├── backend/
-│   ├── index.js
-│   ├── schema.js
-│   ├── resolvers.js
-│   ├── utils/
-│   │   └── scorer.js
-│   ├── package.json
-│   └── README.md
-│
-├── frontend/
-│   ├── public/
-│   │   └── index.html
-│   ├── src/
-│   │   ├── apolloClient.js
-│   │   ├── graphql.js
-│   │   ├── App.js
-│   │   ├── components/
-│   │   │   ├── ActivityResults.js
-│   │   │   └── LegendItem.js
-│   │   └── index.js
-│   ├── package.json
-│   └── README.md
-│
-├── .gitignore
-├── README.md
-└── LICENSE
+  - activity-ui/
+    - public/
+      - index.html
+    - src/
+      - apolloClient.js
+      - graphql.js
+      - App.js
+      - components/
+        - ActivityResults.js
+        - LegendItem.js
+      - index.js
+      - package.json
+      - README.md
+- .gitignore
+- README.md
+- LICENSE
+
+### Activity Scoring Rules
+
+| Activity            | Score Factors                                                  |
+| ------------------- | -------------------------------------------------------------- |
+| Skiing              | High snowfall (> 5 cms) + Cold temperature (< 0C)              |
+| Surfing             | Warm temperature (> 20C ) + High wind speed (> 20kmph)         |
+| Outdoor SightSeeing | Mild temperature (> 15C and < 28C) + Low precipitation (<1mm)  |
+| Indoor SightSeeing  | Rainy(> 5mm) or very hot/cold weather(< 10C or > 30C )         |
+
+---
+## Usage :computer:
+
+1. After starting the Backend and Frontend, open you browser and navigate to http://localhost:3000
+2. Enter the City you want to search activities for
+- ![image](https://github.com/user-attachments/assets/1e811cf5-c1ed-4660-9079-971472f87fe5)
+3. Click the get Rankins button to view the Activity recommendations
+- ![image](https://github.com/user-attachments/assets/d8c78ad0-b25f-476a-beec-7c1c1b8c12a4)
 
 
-
-
-
-Activity Scoring Rules
-
-| Activity            | Score Factors                        |
-| ------------------- | ------------------------------------ |
-| Skiing              | High snowfall + Cold temperature     |
-| Surfing             | Warm temperature + High wind speed   |
-| Outdoor Sightseeing | Mild temperature + Low precipitation |
-| Indoor Sightseeing  | Rainy or very hot/cold weather       |
 
 
