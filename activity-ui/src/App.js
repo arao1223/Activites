@@ -64,7 +64,7 @@ function AppContent() {
 
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: 'red' }}>Error: {error.message}</p>}
-      {data && <h1>Follwing are the activities you can do for next 7 days</h1>}
+      {data && <h1>Following are the activities you can do for next 7 days</h1>}
       {data && <ActivityResults data={data} />}
     </div>
   );
